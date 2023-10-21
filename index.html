@@ -7,11 +7,77 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <style>
+      .col-2 img {
+        height: 120px;
+      }
+    </style>
     <title>Document</title>
   </head>
   <body>
-    <div class="container my-3">
-      <div class="row"></div>
+    <div class="container my-5">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="input-group">
+            <input
+              id="txtSearch"
+              type="text"
+              class="form-control"
+              placeholder="Enter Country..."
+            />
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              id="btnSearch"
+            >
+              Show
+            </button>
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              id="btnSend"
+            >
+              Send Message
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-3" id="country-details">
+        <!-- <div class="card-header">
+          Arama Sonucu
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4">
+              <img src="img/tr.png" class="img-fluid">
+            </div>
+            <div class="col-8">
+              <h3 class="card-title">Türkiye</h3>
+              <hr>
+              <div class="row">
+                <div class="col-4">Nüfus: </div>
+                <div class="col-8">84.5 milyon</div>
+              </div>
+              <div class="row">
+                <div class="col-4">Resmi Dil: </div>
+                <div class="col-8">Türkçe</div>
+              </div>
+              <div class="row">
+                <div class="col-4">Başkent: </div>
+                <div class="col-8">Ankara</div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div class="card mb-3">
+        <div class="card-header">Komşu Ülkeler</div>
+        <div class="card-body">
+          <div class="row" id="neighbors"></div>
+        </div>
+      </div>
+
+      <div id="countrys" class="row"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
