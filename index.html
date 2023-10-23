@@ -8,14 +8,38 @@
       rel="stylesheet"
     />
     <style>
-      .col-2 img {
+      body{
+        background-color: rgb(0, 0, 0);
+      }
+      #details{
+        opacity: 1;
+      }
+      .blackBg{
+        background-color: rgb(86, 86, 86);
+      }
+      .otherCountry{
+        box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.233);
+        margin-bottom: 15px;
+      }
+      .col-2 img{
         height: 120px;
+      }
+      .card{
+        color: #fff;
+        background-color: rgb(74, 74, 74);
+      }
+      .btn{
+        color: #fff;
+      }
+      .displayed{
+        display: none;
       }
     </style>
     <title>Document</title>
   </head>
   <body>
     <div class="container my-5">
+      <div id="errors"></div>
       <div class="card mb-3">
         <div class="card-body">
           <div class="input-group">
@@ -42,40 +66,23 @@
           </div>
         </div>
       </div>
-      <div class="card mb-3" id="country-details">
-        <!-- <div class="card-header">
-          Arama Sonucu
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-4">
-              <img src="img/tr.png" class="img-fluid">
-            </div>
-            <div class="col-8">
-              <h3 class="card-title">Türkiye</h3>
-              <hr>
-              <div class="row">
-                <div class="col-4">Nüfus: </div>
-                <div class="col-8">84.5 milyon</div>
-              </div>
-              <div class="row">
-                <div class="col-4">Resmi Dil: </div>
-                <div class="col-8">Türkçe</div>
-              </div>
-              <div class="row">
-                <div class="col-4">Başkent: </div>
-                <div class="col-8">Ankara</div>
-              </div>
-            </div>
+
+      <div id="details">
+        <div class="card mb-3">
+          <div class="card-header">Arama Sonucu</div>
+          <div class="card-body">
+            <div class="row" id="country-details"></div>
           </div>
-        </div> -->
-      </div>
-      <div class="card mb-3">
-        <div class="card-header">Komşu Ülkeler</div>
-        <div class="card-body">
-          <div class="row" id="neighbors"></div>
+        </div>
+  
+        <div class="card mb-3">
+          <div class="card-header">Komşu Ülkeler</div>
+          <div class="card-body">
+            <div class="row" id="neighbors"></div>
+          </div>
         </div>
       </div>
+
 
       <div id="countrys" class="row"></div>
     </div>

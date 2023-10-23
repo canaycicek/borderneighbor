@@ -3,45 +3,92 @@ const btnSearch = document.getElementById("btnSearch");
 const countrys = document.getElementById("countrys");
 const btnSend = document.getElementById("btnSend");
 
+document.getElementById("details").classList.add("displayed")
+
 btnSearch.addEventListener("click", function () {
   let text = txtSearch.value;
+  document.querySelector("#details").computedStyleMap.opacity = 0;
+
   getCountry(text);
   txtSearch.value = "";
 });
 
-function getCountry(country) {
-  const request = new XMLHttpRequest();
-  request.open("GET", "https://restcountries.com/v3.1/name/" + country);
-  request.send();
+ async function getCountry(country) {
+  try {
+    document.getElementById("details").classList.remove("displayed")
+    const response = await fetch("https://restcountries.com/v3.1/name/" + country)
+    if(!response.ok){
+      throw new Error("Ülke bulunamadı!")
+    }
+    const data = await response.json()
+    renderCountry(data[0])
 
-  // async
+    const countries = data[0].borders;
+    if(!countries){
+      throw new Error("Komşu ülke bulunamadı!")
+    }
 
-  request.addEventListener("load", function () {
-    const data = JSON.parse(this.responseText);
-    renderCountry(data[0]);
+    const response2 = await fetch("https://restcountries.com/v3.1/alpha?codes=" + countries)
+    const neighbors = await response2.json()
+    
+    renderNeighbors(neighbors)
+  } catch(err) {
+    renderError(err)
+  }
 
-    const countries = data[0].borders.toString();
+  // fetch("https://restcountries.com/v3.1/name/" + country)
+  //   .then((response) => {
+  //     if(response.ok){
+  //       document.getElementById("details").classList.remove("displayed")
 
-    // load neighbors
-    const req = new XMLHttpRequest();
+  //       return response.json()
+  //     }else{
+  //       throw new Error("Ülke bulunamadı!")     // throw: bir hata fırlatmak(type error yerine kendi hata yazını yazman için)
+  //     }
+  //   })
+  //   .then((data) =>{
+  //     renderCountry(data[0])
+  //     const countries = data[0].borders
 
-    req.open("GET", "https://restcountries.com/v3.1/alpha?codes=" + countries);
-    req.send();
+  //     if(!countries){
+  //       throw new Error("Komşu ülke bulunamadı!")
+  //     }
 
-    req.addEventListener("load", function () {
-      const data = JSON.parse(this.responseText);
-      renderNeighbors(data);
-    });
-  });
+  //     return fetch("https://restcountries.com/v3.1/alpha?codes=" + countries.toString())
+  //   })
+  //   .then(response => response.json())
+  //   .then((data) => renderNeighbors(data))
+  //   .catch(err => renderError(err));
+
+  // const request = new XMLHttpRequest();
+  // request.open("GET", "https://restcountries.com/v3.1/name/" + country);
+  // request.send();
+
+  // // async
+
+  // request.addEventListener("load", function () {
+  //   const data = JSON.parse(this.responseText);
+  //   renderCountry(data[0]);
+
+  //   const countries = data[0].borders.toString();
+
+  //   // load neighbors
+  //   const req = new XMLHttpRequest();
+
+  //   req.open("GET", "https://restcountries.com/v3.1/alpha?codes=" + countries);
+  //   req.send();
+
+  //   req.addEventListener("load", function () {
+  //     const data = JSON.parse(this.responseText);
+  //     renderNeighbors(data);
+  //   });
+  // });
 }
 
 function renderCountry(data) {
+  document.querySelector("#country-details").innerHTML = ""
+  document.querySelector("#neighbors").innerHTML = ""
   let html = `
-    <div class="card-header">
-      Arama Sonucu
-    </div>
-    <div class="card-body">
-      <div class="row">
         <div class="col-4">
           <img src="${data.flags.png}" class="img-fluid">
         </div>
@@ -71,22 +118,19 @@ function renderCountry(data) {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   `;
-
+  document.querySelector("#details").computedStyleMap.opacity = 1;
   document.querySelector("#country-details").innerHTML = html;
 }
 
 function renderNeighbors(data) {
-  console.log(data);
   let html = "";
   data.forEach((country) => {
     html += `
       <div class="col-2 mt-2">
-        <div class="card">
+        <div class="card otherCountry">
           <img src="${country.flags.png}" class="card-img-top">
-          <div class="card-body">
+          <div class="card-body blackBg">
             <h6 class="card-title">${country.name.common}</h6>
           </div>
         </div>
@@ -94,4 +138,16 @@ function renderNeighbors(data) {
     `;
   });
   document.querySelector("#neighbors").innerHTML = html;
+}
+
+function renderError(err) {
+  const html = `
+    <div class="alert alert-danger">
+      ${err.message}
+    </div>
+  `
+  setTimeout(() => {
+    document.getElementById("errors").innerHTML = ""
+  }, 2000);
+  document.getElementById("errors").innerHTML = html
 }
