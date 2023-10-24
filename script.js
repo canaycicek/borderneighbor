@@ -4,7 +4,7 @@ const countrys = document.getElementById("countrys");
 const btnLocation = document.getElementById("btnLocation");
 const iconLoading = document.getElementById("loading")
 const btnSend = document.getElementById("btnSend")
-const neighborsCt = document.getElementsByClassName("neighborCountry")
+const otherCountrys = document.getElementsByClassName("otherCountrys")
 
 document.getElementById("details").classList.add("displayed")
 
@@ -23,13 +23,13 @@ btnLocation.addEventListener("click", () =>{
   }
 })
 
-const request = new XMLHttpRequest();
+// const request = new XMLHttpRequest();
 
-btnSend.addEventListener("click", function () {
-  request.open("GET", `https://api.telegram.org/bot6117803484:AAFbg7hJJJRS5st3zMferEoIhL-c4C_pwyI/sendMessage?text=${txtSearch.value}&chat_id=1113062866`)
-  request.send()
-  txtSearch.value = ""
-})
+// btnSend.addEventListener("click", function () {
+//   request.open("GET", `https://api.telegram.org/bot6117803484:AAFbg7hJJJRS5st3zMferEoIhL-c4C_pwyI/sendMessage?text=${txtSearch.value}&chat_id=1113062866`)
+//   request.send()
+//   txtSearch.value = ""
+// })
 
 function onError(err) {
   console.log(err);
@@ -169,7 +169,7 @@ function renderNeighbors(data) {
   data.forEach((country) => {
     html += `
       <div class="col-2 mt-2">
-        <div class="card otherCountry neighborCountry" data-title="${country.name.common}">
+        <div class="card otherCountrys" data-title="${country.name.common}">
           <img src="${country.flags.png}" class="card-img-top">
           <div class="card-body blackBg">
             <h6 class="card-title">${country.name.common}</h6>
@@ -180,9 +180,9 @@ function renderNeighbors(data) {
   });
   document.querySelector("#neighbors").innerHTML = html;
   
-    for (let country of neighborsCt) {
-      country.addEventListener("click", () =>{
-        let neiCtName = country.getAttribute("data-title")
+    for (let neighnorCountry of otherCountrys) {
+      neighnorCountry.addEventListener("click", () =>{
+        let neiCtName = neighnorCountry.getAttribute("data-title")
         txtSearch.value = neiCtName
         btnSearch.click()
       })
