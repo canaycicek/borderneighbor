@@ -169,7 +169,7 @@ function renderNeighbors(data) {
   data.forEach((country) => {
     html += `
       <div class="col-2 mt-2">
-        <div class="card otherCountry neighborCountry">
+        <div class="card otherCountry neighborCountry" data-title="${country.name.common}">
           <img src="${country.flags.png}" class="card-img-top">
           <div class="card-body blackBg">
             <h6 class="card-title">${country.name.common}</h6>
@@ -180,21 +180,15 @@ function renderNeighbors(data) {
   });
   document.querySelector("#neighbors").innerHTML = html;
   
-  console.log(neighborsCt);
-
-  for (let country of neighborsCt) {
-    country.addEventListener("click", () =>{
-      let neiCtName = country.outerText 
-      txtSearch.value = neiCtName
-      btnSearch.click()
-    })
-  }
-
-  // console.log(neighborsCt);
-  //  document.querySelector(".neighborCountry").addEventListener("click", () =>{
-  //   console.log("aaa");
-  //  })
+    for (let country of neighborsCt) {
+      country.addEventListener("click", () =>{
+        let neiCtName = country.getAttribute("data-title")
+        txtSearch.value = neiCtName
+        btnSearch.click()
+      })
+    }
 }
+
 
 function renderError(err) {
   iconLoading.style.display = "none"
